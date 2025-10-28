@@ -1,132 +1,144 @@
-AI QA Chatbot with LangChain, LangGraph & FastAPI
-Overview
-This project implements a scalable and extensible AI-powered Question Answering (QA) Chatbot platform using LangChain, LangGraph, and FastAPI. It supports ingestion and indexing of PDF documents, retrieval-augmented generation (RAG) through vector databases, stateful conversational agents, and features both HTTP API endpoints and an interactive CLI interface.
+🤖 AI QA Chatbot with LangChain, LangGraph & FastAPI
 
-Features
-Upload and ingest PDF documents with text extraction and chunking.
+A scalable and extensible AI-powered Question Answering (QA) Chatbot built using LangChain, LangGraph, and FastAPI.
+It supports document ingestion, retrieval-augmented generation (RAG), vector-based search, and stateful conversation agents, accessible via both REST API and CLI interface.
 
-Store document embeddings in PostgreSQL with pgvector for efficient similarity search.
+🚀 Features
 
-Use LangChain and LangGraph to build stateful AI agents with retrieval-augmented generation.
+📄 PDF Upload & Ingestion – Extracts and chunks text from PDF documents
 
-Expose REST API via FastAPI for document upload, query handling, and document management.
+🧠 RAG (Retrieval-Augmented Generation) – Combines document retrieval with LLM reasoning
 
-Command-line interactive LangGraph chatbot client for quick testing and demos.
+🗂️ Vector Database Integration – Stores embeddings using PostgreSQL with pgvector extension
 
-Comprehensive logging for inputs, agent responses, and vectorstore activity.
+⚙️ LangChain + LangGraph Agents – Handles conversational memory and reasoning graph orchestration
 
-Secure sensitive data with .env files, excluded from Git with .gitignore.
+🌐 FastAPI Endpoints – For document management and query handling
 
-Modular design to easily extend or replace components.
+💬 Interactive CLI Client – Chat directly with your AI assistant
 
-Architecture
-text
+🔐 Secure Configuration – Environment-based credentials management
+
+🧩 Modular & Extensible Design – Easy to customize or extend components
+
+🪵 Comprehensive Logging – Logs for API, vectorstore, and agent responses
+
+🏗️ Architecture
 User / CLI / Frontend
-     |
-[FastAPI Backend] <--> [PostgreSQL + pgvector]
-     |
-[LangGraph Agent + LangChain Core + Vectorstore]
-     |
-[OpenAI or other LLM APIs]
-PDFs uploaded through API are processed, chunked, and embedded asynchronously.
+        │
+        ▼
+[ FastAPI Backend ] ⇄ [ PostgreSQL + pgvector ]
+        │
+        ▼
+[ LangGraph Agent + LangChain Core + Vectorstore ]
+        │
+        ▼
+[ OpenAI or Other LLM APIs ]
 
-Vectorstore stores embeddings and metadata for efficient retrieval.
+📘 Workflow
 
-LangGraph agents orchestrate conversation, document retrieval, and LLM calls.
+PDFs are uploaded via API and processed asynchronously
 
-FastAPI handles API requests and responses.
+Text is extracted, chunked, and embedded using LangChain
 
-CLI provides direct agent interaction without HTTP overhead.
+Embeddings are stored in PostgreSQL with pgvector
 
-Setup Instructions
-Prerequisites
-Python 3.10 or higher
+LangGraph orchestrates retrieval and conversation logic
 
-PostgreSQL database with pgvector extension installed
+FastAPI exposes endpoints for upload, query, and management
 
-OpenAI API key or other LLM API keys
+CLI provides lightweight local testing without HTTP overhead
 
-LangGraph API key if applicable
+⚙️ Setup Instructions
+🧾 Prerequisites
 
-Installation Steps
-Clone this repository:
+🐍 Python 3.10 or higher
 
-bash
+🐘 PostgreSQL (with pgvector extension enabled)
+
+🔑 OpenAI API key (or compatible LLM provider)
+
+🧩 LangGraph API key (if applicable)
+
+🧰 Installation Steps
+
+1. Clone the repository
+
 git clone https://github.com/yourusername/yourrepo.git
 cd yourrepo
-Set up Python virtual environment:
 
-bash
+
+2. Create a virtual environment
+
 python -m venv .venv
-source .venv/bin/activate    # Linux/macOS
-.venv\Scripts\activate       # Windows
-Install dependencies:
+# Activate it
+source .venv/bin/activate        # macOS/Linux
+.venv\Scripts\activate           # Windows
 
-bash
+
+3. Install dependencies
+
 pip install -r requirements.txt
-Configure environment variables by creating a .env file with:
 
-text
+
+4. Configure environment variables
+
+Create a file named .env in the root directory:
+
 OPENAI_API_KEY=your_openai_api_key
 LANGGRAPH_API_KEY=your_langgraph_api_key
 DATABASE_URL=postgresql+asyncpg://user:password@localhost:5432/yourdb
-Enable pgvector in PostgreSQL:
 
-sql
+
+5. Enable pgvector extension in PostgreSQL
+
 CREATE EXTENSION IF NOT EXISTS vector;
-Start FastAPI server:
 
-bash
+
+6. Start FastAPI server
+
 uvicorn main:app --reload --port 8000
-Optionally, run the LangGraph chatbot CLI for interactive experience:
 
-bash
+
+7. (Optional) Launch the CLI chatbot
+
 python agent_cli.py
-Usage
-API Endpoints
-POST /upload — Upload and index a PDF document.
 
-POST /ask — Query the AI chatbot with a question.
+🧠 Usage
+🌐 API Endpoints
+Method	Endpoint	Description
+POST	/upload	Upload and index a PDF document
+POST	/ask	Query the chatbot with a question
+GET	/documents	List all uploaded documents
+DELETE	/documents/{id}	Delete a document by its ID
 
-GET /documents — List uploaded documents.
+Example Query
 
-DELETE /documents/{id} — Delete a document by its ID.
+curl -X POST "http://localhost:8000/ask" \
+     -H "Content-Type: application/json" \
+     -d '{"question": "What is this document about?"}'
 
-Interactive CLI
-Launch with python agent_cli.py.
+💬 Interactive CLI
 
-Type messages to interact with the AI agent.
+Run the CLI chatbot:
 
-Enter exit to quit.
+python agent_cli.py
 
-Project Structure
-text
-.
-├── main.py              # FastAPI backend application
-├── agent_cli.py         # Terminal interactive LangGraph chatbot client
-├── requirements.txt     # Python dependencies list
-├── .env                 # Environment variables (ignored in Git)
-├── .gitignore           # Git ignore file for sensitive/unneeded files
-├── uploads/             # Directory to store uploaded PDFs
-├── app/                 # Optional modules (database, models, utils, vectorstore)
-│   ├── db.py
-│   ├── models.py
-│   ├── schemas.py
-│   ├── vectorstore.py
-│   ├── utils.py
-│   └── auth.py
-└── README.md            # This document
-Logging & Debugging
-All API requests, agent invocations, and key actions are logged with timestamps.
 
-Async vectorstore operations log indexing and retrieval status.
+🪵 Logging & Debugging
 
-Use log outputs to trace conversation flows and diagnose errors.
+All API requests, responses, and agent calls are logged with timestamps
 
-Security
-.env file contains sensitive API keys and database credentials.
+Vectorstore logs document indexing and retrieval operations
 
-.env is added to .gitignore to prevent accidental commits.
+LangGraph agent traces conversation state and LLM reasoning
 
-Never commit .env or API keys to public repositories.
+Adjust logging verbosity in configuration if needed
 
+🔒 Security
+
+.env file contains sensitive data – never commit it to Git
+
+.gitignore excludes .env, cache, and unnecessary build files
+
+Restrict PostgreSQL credentials and rotate API keys regularly
