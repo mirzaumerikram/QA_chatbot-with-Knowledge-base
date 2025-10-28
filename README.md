@@ -125,28 +125,6 @@ Run the CLI chatbot:
 python agent_cli.py
 
 
-Then type:
-
-> What is LangGraph?
-> exit
-
-🧩 Project Structure
-.
-├── main.py              # FastAPI backend application
-├── agent_cli.py         # Interactive LangGraph chatbot
-├── requirements.txt     # Dependencies list
-├── .env                 # Environment variables (ignored in Git)
-├── .gitignore           # Git ignore file
-├── uploads/             # Directory to store uploaded PDFs
-├── app/
-│   ├── db.py            # Database setup (SQLAlchemy + pgvector)
-│   ├── models.py        # ORM models
-│   ├── schemas.py       # Pydantic schemas
-│   ├── vectorstore.py   # Embedding & retrieval logic
-│   ├── utils.py         # Helper functions
-│   └── auth.py          # (Optional) Authentication logic
-└── README.md            # This documentation
-
 🪵 Logging & Debugging
 
 All API requests, responses, and agent calls are logged with timestamps
